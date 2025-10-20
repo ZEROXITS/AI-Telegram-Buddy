@@ -1,18 +1,27 @@
-# استخدم صورة بايثون الرسمية
+# استخدم صورة Python 3.12 slim
 FROM python:3.12-slim
 
-# إعداد مجلد العمل داخل الحاوية
+# مجلد العمل
 WORKDIR /app
 
-# نسخ كل ملفات المشروع إلى الحاوية
+# تثبيت الحزم الأساسية للبناء
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3-dev \
+    gcc \
+    libffi-dev \
+    libssl-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# نسخ الملفات
 COPY . /app
 
-# تحديث pip وتثبيت المتطلبات
+# تحديث pip
 RUN pip install --upgrade pip
+
+# تثبيت متطلبات المشروع
 RUN pip install --no-cache-dir -r requirements.txt
 
-# تعيين متغير البيئة لتوكن تيليجرام
-ENV TELEGRAM_TOKEN="6080067114:AAFlhSk0dSRWLidIgc20KdTTYdMBQ6t3Q_0"
-
-# الأمر الافتراضي لتشغيل البوت
+# تشغيل البوت
 CMD ["python", "bot.py"]
