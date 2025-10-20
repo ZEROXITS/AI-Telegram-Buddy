@@ -1,0 +1,18 @@
+# استخدم صورة بايثون الرسمية
+FROM python:3.12-slim
+
+# إعداد مجلد العمل داخل الحاوية
+WORKDIR /app
+
+# نسخ كل ملفات المشروع إلى الحاوية
+COPY . /app
+
+# تحديث pip وتثبيت المتطلبات
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+# تعيين متغير البيئة لتوكن تيليجرام
+ENV TELEGRAM_TOKEN="ضع_توكن_البوت_هنا"
+
+# الأمر الافتراضي لتشغيل البوت
+CMD ["python", "bot.py"]
